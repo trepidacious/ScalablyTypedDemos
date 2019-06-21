@@ -1,8 +1,7 @@
 package demo
 
 import demo.ScalableSlinky._
-import org.scalajs.dom.console
-import slinky.core.{ExternalComponentNoProps, FunctionalComponent, ReactComponentClass}
+import slinky.core.{ExternalComponent, FunctionalComponent, ReactComponentClass}
 import typings.antdLib.antdLibComponents.{Button, FormItem, Input, Option, Select, Form => FormAlt}
 import typings.antdLib.antdLibStrings
 import typings.antdLib.esButtonButtonMod.ButtonProps
@@ -17,16 +16,22 @@ import typings.antdLib.esFormFormMod.{
 }
 import typings.antdLib.esGridColMod.ColProps
 import typings.antdLib.esSelectMod.{OptionProps, SelectProps}
-import typings.reactLib.reactMod.{ComponentType, FormEventHandler}
+import typings.reactLib.reactMod.FormEventHandler
+import typings.stdLib.^.console
 
 import scala.scalajs.js
 import scala.scalajs.js.JSON
 
-object CoordinatedDemo {
+object CoordinatedDemo extends ExternalComponent {
 
-  case class Props(form: WrappedFormUtils[js.Object])
+  // case class won't work because `Form.create` will rewrite the props object
+  class Props(val noteTitle: js.UndefOr[String]) extends js.Object
 
-  val Base = FunctionalComponent[Props] { props =>
+  trait WithForm extends js.Object {
+    val form: WrappedFormUtils[js.Object]
+  }
+
+  val Base = FunctionalComponent[Props with WithForm] { props =>
     val handleSubmit: FormEventHandler[js.Any] = e => {
       e.preventDefault()
       props.form.validateFields((err, values) => {
@@ -73,10 +78,12 @@ object CoordinatedDemo {
           .toST
       )
 
+    val noteTitle = props.noteTitle.getOrElse[String]("Note")
+
     FormAlt.props(
       FormProps(labelCol = ColProps(span = 5), wrapperCol = ColProps(span = 12), onSubmit = handleSubmit)
     )(
-      FormItem.props(FormItemProps(label      = "Note"))(noteInput.fromST),
+      FormItem.props(FormItemProps(label      = noteTitle))(noteInput.fromST),
       FormItem.props(FormItemProps(label      = "Gender"))(genderInput.fromST),
       FormItem.props(FormItemProps(wrapperCol = ColProps(span = 12, offset = 5)))(
         Button.props(ButtonProps(`type` = antdLibStrings.primary, htmlType = antdLibStrings.submit))("Submit")
@@ -84,11 +91,7 @@ object CoordinatedDemo {
     )
   }
 
-  val Component = Form
-    .create(FormCreateOption(name = "coordinated"))(ReactComponentClass.functionalComponentToClass(Base))
-    .asInstanceOf[ComponentType[js.Object]] // drop too complex type
-}
-
-object CoordinatedControls extends ExternalComponentNoProps {
-  override val component = CoordinatedDemo.Component
+  /* `Form.create` returns a new component with the `form` prop already filled */
+  override val component =
+    Form.create(FormCreateOption[Props](name = "coordinated"))(ReactComponentClass.functionalComponentToClass(Base))
 }

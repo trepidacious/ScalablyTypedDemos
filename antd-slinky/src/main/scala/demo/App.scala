@@ -167,7 +167,8 @@ object App {
       )
     )
 
-    val renderCoordinated = section(h2("Form coordinated controls"), CoordinatedControls())
+    val renderCoordinated =
+      section(h2("Form coordinated controls"), CoordinatedDemo(new CoordinatedDemo.Props("write note here")))
 
     div(className := "App")(
       renderIntro,
