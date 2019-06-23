@@ -1,11 +1,10 @@
 package demo
 
+import demo.ReactRouterFacade._
 import slinky.core._
 import slinky.core.annotations.react
 import slinky.web.html._
-import typings.reactDashRouterDashDomLib.reactDashRouterDashDomLibComponents._
 import typings.reactDashRouterLib.reactDashRouterMod._
-import typings.reactLib.ScalableSlinky._
 
 import scala.scalajs.js
 
@@ -25,17 +24,17 @@ import scala.scalajs.js
 
     div(className := "App")(
       renderIntro,
-      BrowserRouter.noprops(
+      BrowserRouter(BrowserRouterProps())(
         div(
           ul(
-            li(Link.props(LinkProps(to = "/"))("Home")),
-            li(Link.props(LinkProps(to = "/about"))("About")),
-            li(Link.props(LinkProps(to = "/topics"))("Topics"))
+            li(Link(LinkProps(to = "/"))("Home")),
+            li(Link(LinkProps(to = "/about"))("About")),
+            li(Link(LinkProps(to = "/topics"))("Topics"))
           ),
           hr(),
-          RouteFacade[Unit](exact = true, path = "/", render = _ => home),
-          RouteFacade[Unit](path = "/about", render = _ => about),
-          RouteFacade[Unit](path = "/topics", render = props => Topics(props.`match`)),
+          Route[Unit](exact = true, path        = "/", render = _ => home),
+          Route[Unit](path  = "/about", render  = _ => about),
+          Route[Unit](path  = "/topics", render = props => Topics(props.`match`)),
         )
       )
     )
@@ -50,13 +49,13 @@ import scala.scalajs.js
     div(
       h2("Topics"),
       ul(
-        li(Link.props(LinkProps(to = props.`match`.url + "/rendering"))("Rendering with React")),
-        li(Link.props(LinkProps(to = props.`match`.url + "/components"))("Components")),
-        li(Link.props(LinkProps(to = props.`match`.url + "/props-v-state"))("Props v. State"))
+        li(Link(LinkProps(to = props.`match`.url + "/rendering"))("Rendering with React")),
+        li(Link(LinkProps(to = props.`match`.url + "/components"))("Components")),
+        li(Link(LinkProps(to = props.`match`.url + "/props-v-state"))("Props v. State"))
       ),
       hr(),
-      RouteFacade[Topic.Param](path = props.`match`.path + "/:topicId", render = props => Topic(props.`match`)),
-      RouteFacade[Unit](exact = true, path = props.`match`.path, render = _ => h3("Please select a topic")),
+      Route[Topic.Param](path = props.`match`.path + "/:topicId", render = props => Topic(props.`match`)),
+      Route[Unit](exact       = true, path                               = props.`match`.path, render = _ => h3("Please select a topic")),
     )
   }
 }
