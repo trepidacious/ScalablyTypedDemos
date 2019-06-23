@@ -1,6 +1,6 @@
 package demo
 
-import demo.ScalableSlinky._
+import typings.reactLib.ScalableSlinky._
 import slinky.core.{ExternalComponent, FunctionalComponent, ReactComponentClass}
 import slinky.core.annotations.react
 import typings.antdLib.antdLibComponents.{Button, FormItem, Input, Option, Select, Form => FormAlt}
