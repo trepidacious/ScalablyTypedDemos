@@ -58,8 +58,8 @@ object CoordinatedDemo {
       }
 
       Form(FormProps(labelCol = ColProps(span = 5), wrapperCol = ColProps(span = 12), onSubmit = handleSubmit))(
-        FormItem(FormItemProps(label      = props.noteTitle))(noteInput.fromST),
-        FormItem(FormItemProps(label      = "Gender"))(genderInput.fromST),
+        FormItem(FormItemProps(label      = props.noteTitle))(noteInput),
+        FormItem(FormItemProps(label      = "Gender"))(genderInput),
         FormItem(FormItemProps(wrapperCol = ColProps(span = 12, offset = 5)))(
           Button(ButtonProps(`type` = antdLibStrings.primary, htmlType = antdLibStrings.submit))("Submit")
         )

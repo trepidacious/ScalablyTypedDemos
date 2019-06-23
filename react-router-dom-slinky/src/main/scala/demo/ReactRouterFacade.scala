@@ -5,13 +5,8 @@ import slinky.core.{BuildingComponent, ReactComponentClass}
 import typings.historyLib.historyMod.{Location, LocationState}
 import typings.reactDashRouterDashDomLib
 import typings.reactDashRouterDashDomLib.{reactDashRouterDashDomLibComponents => RRD}
-import typings.reactDashRouterLib.reactDashRouterMod.{
-  RouteChildrenProps,
-  RouteComponentProps,
-  RouteProps,
-  StaticContext
-}
-import typings.reactLib.ScalableSlinky.fromSt._
+import typings.reactDashRouterLib.reactDashRouterMod.{RouteChildrenProps, RouteComponentProps, RouteProps, StaticContext}
+import typings.reactLib.ScalableSlinky.{ExternalComponentP, importSTComponent}
 
 import scala.scalajs.js
 import scala.scalajs.js.|
@@ -23,8 +18,8 @@ import scala.scalajs.js.|
   */
 object ReactRouterFacade {
 
-  val BrowserRouter = RRD.BrowserRouter.fromST
-  val Link          = RRD.Link.fromST
+  val BrowserRouter: ExternalComponentP[BrowserRouterProps] = importSTComponent(RRD.BrowserRouter)
+  val Link: ExternalComponentP[LinkProps] = importSTComponent(RRD.Link)
 
   @inline def BrowserRouterProps = reactDashRouterDashDomLib.reactDashRouterDashDomMod.BrowserRouterProps
   type BrowserRouterProps = reactDashRouterDashDomLib.reactDashRouterDashDomMod.BrowserRouterProps
@@ -60,6 +55,6 @@ object ReactRouterFacade {
     if (!js.isUndefined(sensitive)) props.updateDynamic("sensitive")(sensitive)
     if (!js.isUndefined(strict)) props.updateDynamic("strict")(strict)
 
-    RRD.Route[RouteProps].fromST(props.asInstanceOf[RouteProps])
+    importSTComponent(RRD.Route[RouteProps])(props.asInstanceOf[RouteProps])
   }
 }

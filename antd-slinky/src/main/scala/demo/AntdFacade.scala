@@ -1,12 +1,12 @@
 package demo
 
+import slinky.core.TagMod
 import slinky.core.facade.ReactElement
 import typings.antdLib.esFormFormMod.default.{create => createForm}
 import typings.antdLib.esFormFormMod.{FormCreateOption, GetFieldDecoratorOptions, WrappedFormUtils}
 import typings.antdLib.{antdLibComponents => Antd}
-import typings.reactLib.ScalableSlinky._
-import typings.reactLib.ScalableSlinky.fromSt._
-import typings.reactLib.reactMod.{ComponentType, ReactNode}
+import typings.reactLib.ScalableSlinky.{ExternalComponentP, FromStReactNode, importSTComponent}
+import typings.reactLib.reactMod.ComponentType
 
 import scala.scalajs.js
 
@@ -17,21 +17,21 @@ import scala.scalajs.js
   */
 object AntdFacade {
   /* rewrites to slinky external components */
-  def Select[T]: ExternalComponentP[SelectProps[T]] = Antd.Select[T].fromST
-  def Table[T]:  ExternalComponentP[TableProps[T]]  = Antd.Table[T].fromST
-  val Alert:     ExternalComponentP[AlertProps]     = Antd.Alert.fromST
-  val Button:    ExternalComponentP[ButtonProps]    = Antd.Button.fromST
-  val Col:       ExternalComponentP[ColProps]       = Antd.Col.fromST
-  val Form:      ExternalComponentP[FormProps]      = Antd.Form.fromST
-  val FormItem:  ExternalComponentP[FormItemProps]  = Antd.FormItem.fromST
-  val Icon:      ExternalComponentP[IconProps]      = Antd.Icon.fromST
-  val Input:     ExternalComponentP[InputProps]     = Antd.Input.fromST
-  val Modal:     ExternalComponentP[ModalProps]     = Antd.Modal.fromST
-  val Option:    ExternalComponentP[OptionProps]    = Antd.Option.fromST
-  val Password:  ExternalComponentP[PasswordProps]  = Antd.Password.fromST
-  val Row:       ExternalComponentP[RowProps]       = Antd.Row.fromST
-  val Spin:      ExternalComponentP[SpinProps]      = Antd.Spin.fromST
-  val Tag:       ExternalComponentP[TagProps]       = Antd.Tag.fromST
+  def Select[T]: ExternalComponentP[SelectProps[T]] = importSTComponent(Antd.Select[T])
+  def Table[T]:  ExternalComponentP[TableProps[T]]  = importSTComponent(Antd.Table[T])
+  val Alert:     ExternalComponentP[AlertProps]     = importSTComponent(Antd.Alert)
+  val Button:    ExternalComponentP[ButtonProps]    = importSTComponent(Antd.Button)
+  val Col:       ExternalComponentP[ColProps]       = importSTComponent(Antd.Col)
+  val Form:      ExternalComponentP[FormProps]      = importSTComponent(Antd.Form)
+  val FormItem:  ExternalComponentP[FormItemProps]  = importSTComponent(Antd.FormItem)
+  val Icon:      ExternalComponentP[IconProps]      = importSTComponent(Antd.Icon)
+  val Input:     ExternalComponentP[InputProps]     = importSTComponent(Antd.Input)
+  val Modal:     ExternalComponentP[ModalProps]     = importSTComponent(Antd.Modal)
+  val Option:    ExternalComponentP[OptionProps]    = importSTComponent(Antd.Option)
+  val Password:  ExternalComponentP[PasswordProps]  = importSTComponent(Antd.Password)
+  val Row:       ExternalComponentP[RowProps]       = importSTComponent(Antd.Row)
+  val Spin:      ExternalComponentP[SpinProps]      = importSTComponent(Antd.Spin)
+  val Tag:       ExternalComponentP[TagProps]       = importSTComponent(Antd.Tag)
 
   /* export unchanged */
   @inline def AlertProps = typings.antdLib.esAlertMod.AlertProps
@@ -75,7 +75,7 @@ object AntdFacade {
   def formComponent[Props <: js.Object](
       options: FormCreateOption[Props]
   )(f:         js.Function1[Props with WithForm, ReactElement]): ExternalComponentP[Props] =
-    createForm(FormCreateOption[Props](name = "coordinated"))(f).asInstanceOf[ComponentType[Props]].fromST
+    importSTComponent(createForm(FormCreateOption[Props](name = "coordinated"))(f).asInstanceOf[ComponentType[Props]])
 
   trait WithForm extends js.Object {
     val form: WrappedFormUtils[js.Object]
@@ -83,6 +83,6 @@ object AntdFacade {
 
   def decoratedField(form: WrappedFormUtils[js.Object], fieldName: String, options: GetFieldDecoratorOptions)(
       children:            ReactElement
-  ): ReactNode =
+  ): TagMod[Any] =
     form.getFieldDecorator(fieldName, options).apply(children).fromST
 }

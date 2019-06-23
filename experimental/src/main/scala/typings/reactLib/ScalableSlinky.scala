@@ -22,32 +22,42 @@ object ScalableSlinky {
   /**
     * Support using ScalablyTyped components as slinky ExternalComponents
     *
-    * We hide this in an object, because it'll be better for users if they won't have to do this
+    * We hide this behind an object, because it's meant for facade authors primarily
     */
-  object fromSt {
-    @inline implicit def fromExoticComponent[P <: js.Object](c: ST.ExoticComponent[P]): Rewriting[P] =
-      new Rewriting[P](c.asInstanceOf[js.Object])
-    @inline implicit def fromComponentClass[P <: js.Object](c: ST.ComponentClass[P, _]): Rewriting[P] =
-      new Rewriting[P](c.asInstanceOf[js.Object])
-    @inline implicit def fromInstantiable1[P <: js.Object](c: Instantiable1[P, ST.ReactElement]): Rewriting[P] =
-      new Rewriting[P](c.asInstanceOf[js.Object])
-    @inline implicit def fromInstantiable2[P <: js.Object](c: Instantiable2[P, _, ST.ReactElement]): Rewriting[P] =
-      new Rewriting[P](c.asInstanceOf[js.Object])
-    @inline implicit def fromComponentType[P <: js.Object](c: ST.ComponentType[P]): Rewriting[P] =
-      new Rewriting[P](c.asInstanceOf[js.Object])
-    @inline implicit def fromFc[P <: js.Object](c: ST.FunctionComponent[P]): Rewriting[P] =
-      new Rewriting[P](c.asInstanceOf[js.Object])
+  object importSTComponent {
+    @inline implicit def apply[P <: js.Object](c: ST.ExoticComponent[P]): ExternalComponentP[P] =
+      new ExternalComponentP[P] {
+        override val component = c.asInstanceOf[js.Object]
+      }
 
-    @inline final class Rewriting[P <: js.Object](private val comp: js.Object) extends AnyVal {
-      @inline def fromST: ExternalComponentP[P] =
-        new ExternalComponentP[P] {
-          override val component = comp
-        }
-    }
+    @inline implicit def apply[P <: js.Object](c: ST.ComponentClass[P, _]): ExternalComponentP[P] =
+      new ExternalComponentP[P] {
+        override val component = c.asInstanceOf[js.Object]
+      }
+
+    @inline implicit def apply[P <: js.Object](c: Instantiable1[P, ST.ReactElement]): ExternalComponentP[P] =
+      new ExternalComponentP[P] {
+        override val component = c.asInstanceOf[js.Object]
+      }
+
+    @inline implicit def apply[P <: js.Object](c: Instantiable2[P, _, ST.ReactElement]): ExternalComponentP[P] =
+      new ExternalComponentP[P] {
+        override val component = c.asInstanceOf[js.Object]
+      }
+
+    @inline implicit def apply[P <: js.Object](c: ST.ComponentType[P]): ExternalComponentP[P] =
+      new ExternalComponentP[P] {
+        override val component = c.asInstanceOf[js.Object]
+      }
+
+    @inline implicit def apply[P <: js.Object](c: ST.FunctionComponent[P]): ExternalComponentP[P] =
+      new ExternalComponentP[P] {
+        override val component = c.asInstanceOf[js.Object]
+      }
   }
 
   @inline implicit final class FromStReactNode(val node: ST.ReactNode) {
-    def fromST: TagMod[Any] = node.asInstanceOf[TagMod[Any]]
+    @inline def fromST: TagMod[Any] = node.asInstanceOf[TagMod[Any]]
   }
 
   /* Support using Slinky things when a ScalablyTyped `ReactElement` is expected */
