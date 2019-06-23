@@ -1,14 +1,14 @@
 package demo
 
-import demo.ScalableSlinky._
 import org.scalajs.dom.console
 import slinky.core._
-import slinky.core.facade.Hooks._
 import slinky.core.annotations.react
+import slinky.core.facade.Hooks._
 import slinky.web.html._
 import typings.antdLib.antdLibComponents.{List => _, _}
 import typings.antdLib.antdLibStrings
 import typings.antdLib.esFormFormMod.FormProps
+import typings.reactLib.ScalableSlinky._
 import typings.reactLib.reactMod.{FormEvent, MouseEvent}
 
 import scala.scalajs.js

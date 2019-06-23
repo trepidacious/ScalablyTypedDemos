@@ -298,7 +298,7 @@ lazy val `antd-slinky` =
         "react" -> "16.8",
         "react-dom" -> "16.8",
       )
-    )
+    ).dependsOn(experimental)
 
 lazy val `react-router-dom` =
   project
@@ -328,16 +328,14 @@ lazy val `react-router-dom-slinky` =
         ScalablyTyped.R.`react`,
         ScalablyTyped.R.`react-dom`,
         ScalablyTyped.R.`react-router-dom`,
-        ScalablyTyped.R.`react-slinky-facade`,
         "me.shadaj" %%% "slinky-web" % "0.6.0",
-        "me.shadaj" %%% "slinky-hot" % "0.6.0"
       ),
       Compile / npmDependencies ++= Seq(
         "react" -> "16.8",
         "react-dom" -> "16.8",
         "react-router-dom" -> "5.0.0",
       )
-    )
+    ).dependsOn(experimental)
 
 lazy val electron = project
   .configure(baseSettings, outputModule)
@@ -396,6 +394,14 @@ lazy val typescript =
       libraryDependencies ++= Seq(ScalablyTyped.N.node, ScalablyTyped.T.typescript),
       Compile / npmDependencies ++= Seq("typescript" -> "3.5.1")
     )
+
+lazy val experimental = project.configure(baseSettings).settings(
+  libraryDependencies ++= Seq(
+    ScalablyTyped.R.`react`,
+    ScalablyTyped.R.`react-dom`,
+    "me.shadaj" %%% "slinky-web" % "0.6.0",
+  )
+)
 
 lazy val baseSettings: Project => Project =
   _.enablePlugins(ScalaJSPlugin)

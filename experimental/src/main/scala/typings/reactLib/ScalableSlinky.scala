@@ -1,4 +1,4 @@
-package demo
+package typings.reactLib
 
 import org.scalablytyped.runtime.{Instantiable1, Instantiable2}
 import slinky.core.{BuildingComponent, KeyAddingStage, KeyAndRefAddingStage, TagMod, WithAttrs, facade => S}
