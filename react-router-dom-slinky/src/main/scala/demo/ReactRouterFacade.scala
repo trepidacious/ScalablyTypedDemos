@@ -5,8 +5,13 @@ import slinky.core.{BuildingComponent, ReactComponentClass}
 import typings.historyLib.historyMod.{Location, LocationState}
 import typings.reactDashRouterDashDomLib
 import typings.reactDashRouterDashDomLib.{reactDashRouterDashDomLibComponents => RRD}
-import typings.reactDashRouterLib.reactDashRouterMod.{RouteChildrenProps, RouteComponentProps, RouteProps, StaticContext}
-import typings.reactLib.ScalableSlinky.{ExternalComponentP, importSTComponent}
+import typings.reactDashRouterLib.reactDashRouterMod.{
+  RouteChildrenProps,
+  RouteComponentProps,
+  RouteProps,
+  StaticContext
+}
+import typings.reactLib.ScalableSlinky.{importSTComponent, ExternalComponentP}
 
 import scala.scalajs.js
 import scala.scalajs.js.|
@@ -19,7 +24,7 @@ import scala.scalajs.js.|
 object ReactRouterFacade {
 
   val BrowserRouter: ExternalComponentP[BrowserRouterProps] = importSTComponent(RRD.BrowserRouter)
-  val Link: ExternalComponentP[LinkProps] = importSTComponent(RRD.Link)
+  val Link:          ExternalComponentP[LinkProps]          = importSTComponent(RRD.Link)
 
   @inline def BrowserRouterProps = reactDashRouterDashDomLib.reactDashRouterDashDomMod.BrowserRouterProps
   type BrowserRouterProps = reactDashRouterDashDomLib.reactDashRouterDashDomMod.BrowserRouterProps

@@ -5,7 +5,7 @@ import slinky.core.facade.ReactElement
 import typings.antdLib.esFormFormMod.default.{create => createForm}
 import typings.antdLib.esFormFormMod.{FormCreateOption, GetFieldDecoratorOptions, WrappedFormUtils}
 import typings.antdLib.{antdLibComponents => Antd}
-import typings.reactLib.ScalableSlinky.{ExternalComponentP, FromStReactNode, importSTComponent}
+import typings.reactLib.ScalableSlinky.{importSTComponent, ExternalComponentP, FromStReactNode}
 import typings.reactLib.reactMod.ComponentType
 
 import scala.scalajs.js
