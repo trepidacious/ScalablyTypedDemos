@@ -10,6 +10,7 @@ import typings.antdLib.antdLibStrings
 import typings.reactLib.ScalableSlinky._
 import typings.reactLib.reactMod.{FormEvent, MouseEvent}
 import typings.antdLib.esNotificationMod.^.{default => Notification}
+
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 

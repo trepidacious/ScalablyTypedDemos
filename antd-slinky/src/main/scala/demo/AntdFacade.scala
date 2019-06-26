@@ -53,7 +53,7 @@ object AntdFacade {
   @inline def ModalProps = typings.antdLib.esModalModalMod.ModalProps
   type ModalProps = typings.antdLib.esModalModalMod.ModalProps
   @inline def NotificationArgsProps = typings.antdLib.esNotificationMod.ArgsProps
-  type NotificationArgsProps = typings.antdLib.esModalModalMod.ModalProps
+  type NotificationArgsProps = typings.antdLib.esNotificationMod.ArgsProps
   @inline def OptionProps = typings.antdLib.esSelectMod.OptionProps
   type OptionProps = typings.antdLib.esSelectMod.OptionProps
   @inline def PasswordProps = typings.antdLib.esInputPasswordMod.PasswordProps
