@@ -25,32 +25,32 @@ object ScalableSlinky {
     * We hide this behind an object, because it's meant for facade authors primarily
     */
   object importSTComponent {
-    @inline implicit def apply[P <: js.Object](c: ST.ExoticComponent[P]): ExternalComponentP[P] =
+    @inline def apply[P <: js.Object](c: ST.ExoticComponent[P]): ExternalComponentP[P] =
       new ExternalComponentP[P] {
         override val component = c.asInstanceOf[js.Object]
       }
 
-    @inline implicit def apply[P <: js.Object](c: ST.ComponentClass[P, _]): ExternalComponentP[P] =
+    @inline def apply[P <: js.Object](c: ST.ComponentClass[P, _]): ExternalComponentP[P] =
       new ExternalComponentP[P] {
         override val component = c.asInstanceOf[js.Object]
       }
 
-    @inline implicit def apply[P <: js.Object](c: Instantiable1[P, ST.ReactElement]): ExternalComponentP[P] =
+    @inline def apply[P <: js.Object](c: Instantiable1[P, ST.ReactElement]): ExternalComponentP[P] =
       new ExternalComponentP[P] {
         override val component = c.asInstanceOf[js.Object]
       }
 
-    @inline implicit def apply[P <: js.Object](c: Instantiable2[P, _, ST.ReactElement]): ExternalComponentP[P] =
+    @inline def apply[P <: js.Object](c: Instantiable2[P, _, ST.ReactElement]): ExternalComponentP[P] =
       new ExternalComponentP[P] {
         override val component = c.asInstanceOf[js.Object]
       }
 
-    @inline implicit def apply[P <: js.Object](c: ST.ComponentType[P]): ExternalComponentP[P] =
+    @inline def apply[P <: js.Object](c: ST.ComponentType[P]): ExternalComponentP[P] =
       new ExternalComponentP[P] {
         override val component = c.asInstanceOf[js.Object]
       }
 
-    @inline implicit def apply[P <: js.Object](c: ST.FunctionComponent[P]): ExternalComponentP[P] =
+    @inline def apply[P <: js.Object](c: ST.FunctionComponent[P]): ExternalComponentP[P] =
       new ExternalComponentP[P] {
         override val component = c.asInstanceOf[js.Object]
       }
@@ -61,7 +61,7 @@ object ScalableSlinky {
   }
 
   /* Support using Slinky things when a ScalablyTyped `ReactElement` is expected */
-  @inline final class ToStReactElement(val elem: S.ReactElement) extends AnyVal {
+  @inline implicit final class ToStReactElement(val elem: S.ReactElement) extends AnyVal {
     @inline def toST: ST.ReactElement = elem.asInstanceOf[ST.ReactElement]
   }
 

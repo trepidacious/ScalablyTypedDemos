@@ -8,12 +8,13 @@ import typings.semanticDashUiDashReactLib.{
   semanticDashUiDashReactLibStrings,
   semanticDashUiDashReactLibComponents => Sui
 }
-import typings.stdLib.ThenableOps.ThenableOps
+import typings.stdLib.RequestInit
+import typings.stdLib.ThenableOps.ThenableToFutureOps
 import typings.stdLib.^.{console, fetch}
-import typings.stdLib.{Record, RequestInit}
 
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 import scala.scalajs.js
-import scala.scalajs.js.Promise
 
 object GithubSearch {
   import typings.reactLib.dsl._
@@ -32,19 +33,18 @@ object GithubSearch {
       val items: js.Array[Repository]
     }
 
-    def doSearch(search: String): Promise[Response] = {
-      val init = RequestInit(
-        headers = StringDictionary("Accept" -> "application/vnd.github.v3+json"): Record[String, String]
-      )
-
-      fetch(s"https://api.github.com/search/repositories?q=$search&sort=stars", init)
-        .flatMap(_.json())
-        .assertType[Response]
-        .map { res =>
-          console.warn("got data", res.items)
-          res
-        }
-    }
+    def doSearch(search: String): Future[Response] =
+      for {
+        one <- fetch(
+          input = s"https://api.github.com/search/repositories?q=$search&sort=stars",
+          init  = RequestInit(headers = js.Array(js.Array("Accept", "application/vnd.github.v3+json")))
+        ).asFuture
+        res <- one.json().asFuture
+      } yield {
+        val response = res.asInstanceOf[Response]
+        console.warn("got data", response.items)
+        response
+      }
   }
 
   trait State extends js.Object {

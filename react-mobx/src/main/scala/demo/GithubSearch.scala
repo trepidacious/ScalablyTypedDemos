@@ -9,8 +9,11 @@ import typings.mobxLib.libTypesObservablevalueMod.IObservableValue
 import typings.mobxLib.{mobxMod => MobX}
 import typings.reactLib.reactMod._
 import typings.stdLib.^.{console, window}
+import typings.stdLib.ThenableOps.ThenableToFutureOps
 
 import scala.scalajs.js
+import scala.util.{Failure, Success}
+import scala.concurrent.ExecutionContext.Implicits.global
 
 object GithubSearch {
   import typings.reactLib.dsl._
@@ -41,17 +44,20 @@ object GithubSearch {
         "searchForRepos",
         () =>
           Axios
-            .get[Response](
+            .get[Response, AxiosResponse[Response]](
               "https://api.github.com/search/repositories",
               AxiosRequestConfig(
                 params  = js.Dynamic.literal(q      = search.get(), sort = "stars"),
                 headers = js.Dynamic.literal(Accept = "application/vnd.github.v3+json"),
               )
             )
-            .`then`[Unit]({ res =>
-              console.warn("got data", res.data.items)
-              result.set(res.data.items)
-            }, js.defined(err => console.warn("request rejected", err.toString)))
+            .asFuture
+            .onComplete {
+              case Failure(err) => console.warn("request rejected", err.toString)
+              case Success(res) =>
+                console.warn("got data", res.data.items)
+                result.set(res.data.items)
+          }
       )
   }
 

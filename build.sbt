@@ -30,6 +30,7 @@ lazy val `react-mobx` =
         ScalablyTyped.M.`mobx-react`,
         ScalablyTyped.R.`react-facade`,
         ScalablyTyped.R.`react-dom`,
+        ScalablyTyped.S.`std-facade`,
       ),
       Compile / npmDependencies ++= Seq(
         "axios" -> "0.18.0",
