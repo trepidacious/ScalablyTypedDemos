@@ -1,6 +1,6 @@
 package demo
 
-import typings.axiosLib.axiosMod.{AxiosRequestConfig}
+import typings.axiosLib.axiosMod.{AxiosError, AxiosRequestConfig}
 import typings.axiosLib.axiosMod.^.{default => Axios}
 import typings.csstypeLib.csstypeLibStrings
 import typings.materialDashUiLib.{materialDashUiLibComponents => Mui}
@@ -53,7 +53,9 @@ object GithubSearch {
             )
             .asFuture
             .onComplete {
-              case Failure(WrapperException(err)) => console.warn("request rejected", err.toString)
+              case Failure(WrapperException(err)) =>
+                val axiosError = err.asInstanceOf[AxiosError]
+                console.warn("request rejected", axiosError.response)
               case Success(res) =>
                 console.warn("got data", res.data.items)
                 result.set(res.data.items)
