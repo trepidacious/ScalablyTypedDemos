@@ -1,6 +1,6 @@
 package demo
 
-import typings.axiosLib.axiosMod.{AxiosRequestConfig, AxiosResponse}
+import typings.axiosLib.axiosMod.{AxiosRequestConfig}
 import typings.axiosLib.axiosMod.^.{default => Axios}
 import typings.csstypeLib.csstypeLibStrings
 import typings.materialDashUiLib.{materialDashUiLibComponents => Mui}
@@ -9,7 +9,7 @@ import typings.mobxLib.libTypesObservablevalueMod.IObservableValue
 import typings.mobxLib.{mobxMod => MobX}
 import typings.reactLib.reactMod._
 import typings.stdLib.^.{console, window}
-import typings.stdLib.ThenableOps.ThenableToFutureOps
+import typings.stdLib.ThenableOps.{ThenableToFutureOps, WrapperException}
 
 import scala.scalajs.js
 import scala.util.{Failure, Success}
@@ -44,7 +44,7 @@ object GithubSearch {
         "searchForRepos",
         () =>
           Axios
-            .get[Response, AxiosResponse[Response]](
+            .get[Response](
               "https://api.github.com/search/repositories",
               AxiosRequestConfig(
                 params  = js.Dynamic.literal(q      = search.get(), sort = "stars"),
@@ -53,7 +53,7 @@ object GithubSearch {
             )
             .asFuture
             .onComplete {
-              case Failure(err) => console.warn("request rejected", err.toString)
+              case Failure(WrapperException(err)) => console.warn("request rejected", err.toString)
               case Success(res) =>
                 console.warn("got data", res.data.items)
                 result.set(res.data.items)

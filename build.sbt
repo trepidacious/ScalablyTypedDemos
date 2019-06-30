@@ -85,7 +85,7 @@ lazy val `react-big-calendar` =
         "moment" -> "2.24.0",
         "react" -> "16.8",
         "react-dom" -> "16.8",
-        "react-big-calendar" -> "0.20",
+        "react-big-calendar" -> "0.22",
       )
     )
 
