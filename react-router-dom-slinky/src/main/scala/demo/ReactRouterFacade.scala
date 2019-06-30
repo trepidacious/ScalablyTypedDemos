@@ -4,8 +4,13 @@ import slinky.core.facade.ReactElement
 import slinky.core.{BuildingComponent, ReactComponentClass}
 import typings.historyLib.historyMod.{Location, LocationState}
 import typings.reactDashRouterDashDomLib.{reactDashRouterDashDomLibProps, reactDashRouterDashDomLibComponents => RRD}
-import typings.reactDashRouterLib.reactDashRouterMod.{RouteChildrenProps, RouteComponentProps, RouteProps, StaticContext}
-import typings.reactLib.ScalableSlinky.{ExternalComponentP, importSTComponent}
+import typings.reactDashRouterLib.reactDashRouterMod.{
+  RouteChildrenProps,
+  RouteComponentProps,
+  RouteProps,
+  StaticContext
+}
+import typings.reactLib.ScalableSlinky.{importSTComponent, ExternalComponentP}
 
 import scala.scalajs.js
 import scala.scalajs.js.|
