@@ -9,7 +9,6 @@ import typings.semanticDashUiDashReactLib.{
   semanticDashUiDashReactLibComponents => Sui
 }
 import typings.stdLib.RequestInit
-import typings.stdLib.ThenableOps.ThenableToFutureOps
 import typings.stdLib.^.fetch
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -42,11 +41,11 @@ object GithubSearch {
       fetch(
         input = s"https://api.github.com/search/repositories?q=$search&sort=stars",
         init  = RequestInit(headers = js.Array(js.Array("Accept", "application/vnd.github.v3+json")))
-      ).asFuture.flatMap {
+      ).toFuture.flatMap {
         case res if res.status == 200 =>
-          res.json().asFuture.map(data => Right(data.asInstanceOf[Response]))
+          res.json().toFuture.map(data => Right(data.asInstanceOf[Response]))
         case errorRes =>
-          errorRes.json().asFuture.map(data => Left(data.asInstanceOf[GithubError]))
+          errorRes.json().toFuture.map(data => Left(data.asInstanceOf[GithubError]))
       }
 
   }

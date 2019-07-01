@@ -9,7 +9,6 @@ import typings.mobxLib.libTypesObservablevalueMod.IObservableValue
 import typings.mobxLib.{mobxMod => MobX}
 import typings.reactLib.reactMod._
 import typings.stdLib.^.{console, window}
-import typings.stdLib.ThenableOps.{ThenableToFutureOps, WrapperException}
 
 import scala.scalajs.js
 import scala.util.{Failure, Success}
@@ -51,11 +50,13 @@ object GithubSearch {
                 headers = js.Dynamic.literal(Accept = "application/vnd.github.v3+json"),
               )
             )
-            .asFuture
+            .toFuture
             .onComplete {
-              case Failure(WrapperException(err)) =>
+              case Failure(js.JavaScriptException(err)) =>
                 val axiosError = err.asInstanceOf[AxiosError]
                 console.warn("request rejected", axiosError.response)
+              case Failure(other) =>
+                console.warn("request failed", other.getMessage)
               case Success(res) =>
                 console.warn("got data", res.data.items)
                 result.set(res.data.items)
