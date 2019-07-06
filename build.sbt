@@ -42,24 +42,24 @@ lazy val `react-mobx` =
       )
     )
 
-lazy val `react-slick` =
-  project
-    .configure(baseSettings, bundlerSettings, browserProject)
-    .settings(
-      webpackDevServerPort := 8005,
-      libraryDependencies ++= Seq(
-        "com.github.japgolly.scalajs-react" %%% "core" % "1.3.1",
-        ScalablyTyped.R.`react-dom`,
-        ScalablyTyped.R.`react-slick`,
-        ScalablyTyped.R.`react-facade`,
-        ScalablyTyped.R.`react-japgolly-facade`,
-      ),
-      Compile / npmDependencies ++= Seq(
-        "react" -> "16.8",
-        "react-dom" -> "16.8",
-        "react-slick" -> "0.23",
-      )
-    )
+//lazy val `react-slick` =
+//  project
+//    .configure(baseSettings, bundlerSettings, browserProject)
+//    .settings(
+//      webpackDevServerPort := 8005,
+//      libraryDependencies ++= Seq(
+//        "com.github.japgolly.scalajs-react" %%% "core" % "1.3.1",
+//        ScalablyTyped.R.`react-dom`,
+//        ScalablyTyped.R.`react-slick`,
+//        ScalablyTyped.R.`react-facade`,
+//        ScalablyTyped.R.`react-japgolly-facade`,
+//      ),
+//      Compile / npmDependencies ++= Seq(
+//        "react" -> "16.8",
+//        "react-dom" -> "16.8",
+//        "react-slick" -> "0.23",
+//      )
+//    )
 
 lazy val vue =
   project
@@ -145,23 +145,23 @@ lazy val `semantic-ui-react` = project
     ),
   )
 
-lazy val reveal = project
-  .configure(baseSettings, bundlerSettings, browserProject, withCssLoading)
-  .settings(
-    webpackDevServerPort := 8010,
-    libraryDependencies ++= Seq(
-      "com.github.japgolly.scalajs-react" %%% "core" % "1.3.1",
-      ScalablyTyped.H.highlight_dot_js,
-      ScalablyTyped.R.`react-japgolly-facade`,
-      ScalablyTyped.R.`reveal`,
-    ),
-    Compile / npmDependencies ++= Seq(
-      "highlight.js" -> "9.12",
-      "reveal.js" -> "3.7.0",
-      "react-dom" -> "16.8",
-      "react" -> "16.8",
-    ),
-  )
+//lazy val reveal = project
+//  .configure(baseSettings, bundlerSettings, browserProject, withCssLoading)
+//  .settings(
+//    webpackDevServerPort := 8010,
+//    libraryDependencies ++= Seq(
+//      "com.github.japgolly.scalajs-react" %%% "core" % "1.3.1",
+//      ScalablyTyped.H.highlight_dot_js,
+//      ScalablyTyped.R.`react-japgolly-facade`,
+//      ScalablyTyped.R.`reveal`,
+//    ),
+//    Compile / npmDependencies ++= Seq(
+//      "highlight.js" -> "9.12",
+//      "reveal.js" -> "3.7.0",
+//      "react-dom" -> "16.8",
+//      "react" -> "16.8",
+//    ),
+//  )
 
 lazy val chart = project
   .configure(baseSettings, bundlerSettings, browserProject)
@@ -283,23 +283,20 @@ lazy val antd =
 
 lazy val `antd-slinky` =
   project
-    .configure(baseSettings, bundlerSettings, browserProject, withCssLoading)
+    .configure(baseSettings, bundlerSettings, browserProject, withCssLoading, slinkyProject)
     .settings(
       webpackDevServerPort := 8018,
-      addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.full),
       libraryDependencies ++= Seq(
         ScalablyTyped.A.antd,
         ScalablyTyped.R.`react`,
         ScalablyTyped.R.`react-dom`,
-        "me.shadaj" %%% "slinky-web" % "0.6.0",
-        "me.shadaj" %%% "slinky-hot" % "0.6.0"
       ),
       Compile / npmDependencies ++= Seq(
         "antd" -> "3.19.2",
         "react" -> "16.8",
         "react-dom" -> "16.8",
       )
-    ).dependsOn(experimental)
+    )
 
 lazy val `react-router-dom` =
   project
@@ -321,22 +318,20 @@ lazy val `react-router-dom` =
 
 lazy val `react-router-dom-slinky` =
   project
-    .configure(baseSettings, bundlerSettings, browserProject)
+    .configure(baseSettings, bundlerSettings, browserProject, slinkyProject)
     .settings(
       webpackDevServerPort := 8019,
-      addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.full),
       libraryDependencies ++= Seq(
         ScalablyTyped.R.`react`,
         ScalablyTyped.R.`react-dom`,
         ScalablyTyped.R.`react-router-dom`,
-        "me.shadaj" %%% "slinky-web" % "0.6.0",
       ),
       Compile / npmDependencies ++= Seq(
         "react" -> "16.8",
         "react-dom" -> "16.8",
         "react-router-dom" -> "5.0.0",
       )
-    ).dependsOn(experimental)
+    )
 
 lazy val electron = project
   .configure(baseSettings, outputModule, application)
@@ -400,14 +395,14 @@ lazy val experimental = project.configure(baseSettings).settings(
   libraryDependencies ++= Seq(
     ScalablyTyped.R.`react`,
     ScalablyTyped.R.`react-dom`,
-    "me.shadaj" %%% "slinky-web" % "0.6.0",
+    "me.shadaj" %%% "slinky-web" % "0.6.2",
   )
 )
 
 lazy val baseSettings: Project => Project =
   _.enablePlugins(ScalaJSPlugin)
     .settings(
-      scalaVersion := "2.12.8",
+      scalaVersion := "2.13.0",
       version := "0.1-SNAPSHOT",
       scalacOptions ++= ScalacOptions.flags,
       /* in preparation for scala.js 1.0 */
@@ -501,3 +496,12 @@ val nodeProject: Project => Project =
 /* turn the javascript artifact into a module. */
 val outputModule: Project => Project =
   _.settings(scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) })
+
+val slinkyProject: Project => Project =
+  _.settings(
+    scalacOptions += "-Ymacro-annotations",
+    libraryDependencies ++= Seq(
+      "me.shadaj" %%% "slinky-web" % "0.6.2",
+      "me.shadaj" %%% "slinky-hot" % "0.6.2"
+    )
+  ).dependsOn(experimental)

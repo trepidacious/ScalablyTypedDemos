@@ -10,6 +10,8 @@ import typings.reactDashNavigationLib.reactDashNavigationMod._
 import typings.reactLib.reactMod.{FC, ReactElement}
 import typings.stdLib.^.Object
 
+import scala.scalajs.js
+
 object routing {
   import typings.reactLib.dsl._
 
@@ -29,7 +31,7 @@ object routing {
   )
 
   def drawerRoute(label: String, muiIcon: String, component: NavigationComponent): NavigationRouteConfig =
-    Object.assign(
+    Object.assign[Anon_Screen, Anon_NavigationOptionsPath](
       Anon_Screen(component),
       Anon_NavigationOptionsPath(
         NavigationDrawerScreenOptions(

@@ -31,8 +31,8 @@ object D3Demo {
     val size: Double = width min height
 
     d3.select("#content")
-      .attr("width", width + "px")
-      .attr("height", height + "px")
+      .attr("width", width.toString + "px")
+      .attr("height", height.toString + "px")
 
     val projection: GeoProjection =
       d3.geoOrthographic()
