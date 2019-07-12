@@ -1,26 +1,13 @@
 package demo
 
-import typings.reactLib.reactMod.ReactElement
-import typings.semanticDashUiDashReactLib.{
-  Anon_MenuItem => TabStructure,
-  semanticDashUiDashReactLibComponents => Sui,
-  semanticDashUiDashReactLibStrings => SuiStrings
-}
-
-import scala.scalajs.js
-
-import typings.semanticDashUiDashReactLib.semanticDashUiDashReactLibProps
+import typings.semanticDashUiDashReactLib.{semanticDashUiDashReactLibStrings, semanticDashUiDashReactLibComponents => Sui, semanticDashUiDashReactLibProps => SuiProps}
 import typings.reactLib.ScalableSlinky._
 
 /**
   * This wraps most of `semantic-ui-react` in a more slinky friendly way. We cast all components into `ExternalComponent`s, and
   * export all available component props object creators as well
   */
-object SuiFacade extends semanticDashUiDashReactLibProps {
-  import typings.semanticDashUiDashReactLib.{
-    semanticDashUiDashReactLibComponents => Sui, 
-    semanticDashUiDashReactLibStrings => SuiStrings
-  }
+object SuiFacade extends SuiProps {
 
   @inline def Accordion:                  ExternalComponentP[AccordionProps]                = importSTComponent(Sui.Accordion)
   @inline def AccordionAccordion:         ExternalComponentP[AccordionAccordionProps]       = importSTComponent(Sui.AccordionAccordion)
@@ -189,6 +176,6 @@ object SuiFacade extends semanticDashUiDashReactLibProps {
   @inline def TransitionGroup:            ExternalComponentP[TransitionGroupProps]          = importSTComponent(Sui.TransitionGroup)
   @inline def Visibility:                 ExternalComponentP[VisibilityProps]               = importSTComponent(Sui.Visibility)
 
+  val Strings: semanticDashUiDashReactLibStrings.type = typings.semanticDashUiDashReactLib.semanticDashUiDashReactLibStrings
+
 }
-
-

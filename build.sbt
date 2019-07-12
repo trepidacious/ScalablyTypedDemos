@@ -142,6 +142,7 @@ lazy val `semantic-ui-react` = project
 lazy val `semantic-ui-react-facade` = project
 .configure(baseSettings, bundlerSettings, browserProject)
 .settings(
+  addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.full),
   webpackDevServerPort := 8021,
   libraryDependencies ++= Seq(
     ScalablyTyped.R.`react-dom`,
