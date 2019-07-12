@@ -139,6 +139,25 @@ lazy val `semantic-ui-react` = project
     ),
   )
 
+lazy val `semantic-ui-react-facade` = project
+.configure(baseSettings, bundlerSettings, browserProject)
+.settings(
+  webpackDevServerPort := 8021,
+  libraryDependencies ++= Seq(
+    ScalablyTyped.R.`react-dom`,
+    ScalablyTyped.R.`react-facade`,
+    ScalablyTyped.S.`semantic-ui-react`,
+    ScalablyTyped.R.`react-slinky-facade`,
+  ),
+  Compile / npmDependencies ++= Seq(
+    "react-dom" -> "16.8",
+    "react" -> "16.8",
+    "semantic-ui-react" -> "0.87.3",
+    "semantic-ui-css" -> "^2.4.1",
+  ),
+)  
+
+
 lazy val reveal = project
   .configure(baseSettings, bundlerSettings, browserProject, withCssLoading)
   .settings(
