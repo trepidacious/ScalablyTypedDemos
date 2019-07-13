@@ -4,6 +4,8 @@ import slinky.core._
 import slinky.core.annotations.react
 import slinky.web.html._
 
+import typings.semanticDashUiDashReactLib.semanticDashUiDashReactLibStrings
+
 import scala.scalajs.js.annotation.JSImport
 import scala.scalajs.js
 
@@ -62,6 +64,11 @@ import scala.scalajs.js
       Input(InputProps())
     )
 
+    val renderIcon = section(
+      Header(HeaderProps(as = "h2"))("Icon"),
+      Icon(IconProps(disabled = true, name = semanticDashUiDashReactLibStrings.users))
+    )
+
     div(className := "App")(
       // renderIntro,
       div(
@@ -69,6 +76,7 @@ import scala.scalajs.js
         renderInput,
         renderProgress,
         renderButton,
+        renderIcon
       )
     )
   }
