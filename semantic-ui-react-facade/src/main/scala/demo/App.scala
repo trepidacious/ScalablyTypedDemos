@@ -63,13 +63,20 @@ import scala.scalajs.js
     )
 
     val renderIcon = section(
-      Header(HeaderProps(as = "h2", icon = true))(
-        Icon(IconProps(name = Strings.settings)),
-        "Icon",
-        HeaderSubheader(HeaderSubheaderProps())("Also embedded in other components")
-      ),
+      Header(HeaderProps(as = "h2", icon = true))("Icon"),
       div(
-        Icon(IconProps(disabled = true, name = Strings.users))
+        Icon(IconProps(name = Strings.settings))
+      )
+    )
+
+    val renderIconHeader = section(
+      Header(HeaderProps(as = "h2", icon = true))("Header with Icon"),
+      p(
+        Header(HeaderProps(as = "h3", icon = true))(
+          Icon(IconProps(name = Strings.settings)),
+          "Header itself",
+          HeaderSubheader(HeaderSubheaderProps())("Subheader")
+        )
       )
     )
 
@@ -80,7 +87,8 @@ import scala.scalajs.js
         renderInput,
         renderProgress,
         renderButton,
-        renderIcon
+        renderIcon,
+        renderIconHeader
       )
     )
   }
